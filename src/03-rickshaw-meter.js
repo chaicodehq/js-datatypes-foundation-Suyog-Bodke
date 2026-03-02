@@ -52,20 +52,44 @@
  */
 export function parseFare(fareString) {
   // Your code here
+  return typeof fareString !== "string" || Number.isNaN(parseFloat(fareString))
+    ? -1
+    : parseFloat(fareString);
 }
 
 export function roundFare(amount, decimalPlaces) {
   // Your code here
+  return typeof amount !== "number" ||
+    !Number.isInteger(decimalPlaces) ||
+    decimalPlaces < 0
+    ? ""
+    : amount.toFixed(decimalPlaces);
 }
 
 export function calculateSurge(baseFare, surgeMultiplier) {
   // Your code here
+  return baseFare < 0 ||
+    surgeMultiplier < 0 ||
+    typeof baseFare !== "number" ||
+    typeof surgeMultiplier !== "number"
+    ? 0
+    : Math.ceil(baseFare * surgeMultiplier);
 }
 
 export function findCheapestAndCostliest(...fares) {
   // Your code here
+  let validFare = fares.filter(
+    (fare) => typeof fare === "number" && !Number.isNaN(fare),
+  );
+
+  return validFare.length === 0
+    ? null
+    : { cheapest: Math.min(...validFare), costliest: Math.max(...validFare) };
 }
 
 export function getDistanceDifference(from, to) {
   // Your code here
+  return Number.isNaN(parseInt(from)) || Number.isNaN(parseInt(to))
+    ? -1
+    : Math.abs(parseInt(from) - parseInt(to));
 }
